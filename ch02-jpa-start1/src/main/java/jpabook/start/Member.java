@@ -1,48 +1,37 @@
 package jpabook.start;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.Date;
+
+@Getter
+@Setter
 @Entity
-@Table(name="MEMBER")
+@Table(name="MEMBER", uniqueConstraints = {@UniqueConstraint(
+        name = "NAME_AGE_UNIQUE",
+        columnNames = {"NAME", "AGE"})})
 public class Member {
 
     @Id
     @Column(name = "ID")
     private String id;
-    @Column(name = "NAME")
+
+    @Column(name = "NAME", nullable = false, length = 10)
     private String username;
+
     private Integer age;
 
-    public String getId() {
-        return id;
-    }
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
-    public String getUsername() {
-        return username;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", age=" + age +
-                '}';
-    }
+    @Lob
+    private String description;
 }
