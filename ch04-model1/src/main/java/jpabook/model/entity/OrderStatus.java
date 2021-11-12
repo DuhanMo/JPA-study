@@ -1,5 +1,6 @@
 package jpabook.model.entity;
 
 public enum OrderStatus {
-    ORDER, CANCLE
+    ORDER,
+    CANCLE
 }

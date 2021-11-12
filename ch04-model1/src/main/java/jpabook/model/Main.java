@@ -1,15 +1,12 @@
 package jpabook.model;
 
-import jpabook.model.entity.Member;
-import jpabook.model.entity.Order;
-import jpabook.model.entity.OrderStatus;
+import jpabook.model.entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Date;
-import java.util.List;
 
 public class Main {
 
@@ -38,17 +35,24 @@ public class Main {
         member.setZipcode("123");
         em.persist(member);
 
+        Item item = new Item();
+        item.setName("맥북");
+        item.setPrice(3400000);
+        item.setStockQuantity(21);
+        em.persist(item);
+
         Order order = new Order();
-        order.setMemberId(1L);
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(new Date());
+        order.setMember(member);
         em.persist(order);
 
-        Order findOrder = em.find(Order.class, order.getId());
-        // Member findMember = findOrder.getMember(); 이렇게 해야 객체지향적인 방법
-        Member findMember = em.find(Member.class, findOrder.getMemberId());
-
-        System.out.println(findOrder);
-        System.out.println(findMember);
+        OrderItem orderItem = new OrderItem();
+        int count = 2;
+        orderItem.setOrder(order);
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice() * count);
+        em.persist(orderItem);
     }
 }
