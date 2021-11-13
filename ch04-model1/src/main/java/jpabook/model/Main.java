@@ -41,11 +41,20 @@ public class Main {
         item.setStockQuantity(21);
         em.persist(item);
 
+        Delivery delivery = new Delivery();
+        delivery.setStatus(DeliveryStatus.READY);
+        delivery.setCity("인천");
+        delivery.setZipcode("123");
+        em.persist(delivery);
+
         Order order = new Order();
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(new Date());
         order.setMember(member);
+        order.setDelivery(delivery);
         em.persist(order);
+
+        System.out.println("롬복을 뚫고 직접 작성한 세터가 작동하는가? : " + delivery.getOrder());
 
         OrderItem orderItem = new OrderItem();
         int count = 2;

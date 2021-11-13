@@ -2,13 +2,16 @@ package jpabook.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ToString
 @Getter
+@Setter
 @Entity
 @Table(name = "ORDERS")
 public class Order {
@@ -24,6 +27,10 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
+
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
@@ -45,39 +52,8 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
     }
 }
