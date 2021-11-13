@@ -1,6 +1,7 @@
 package jpabook.model;
 
 import jpabook.model.entity.*;
+import jpabook.model.entity.item.Item;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,11 +36,11 @@ public class Main {
         member.setZipcode("123");
         em.persist(member);
 
-        Item item = new Item();
-        item.setName("맥북");
-        item.setPrice(3400000);
-        item.setStockQuantity(21);
-        em.persist(item);
+//        Item item = new Item();
+//        item.setName("맥북");
+//        item.setPrice(3400000);
+//        item.setStockQuantity(21);
+//        em.persist(item);
 
         Delivery delivery = new Delivery();
         delivery.setStatus(DeliveryStatus.READY);
@@ -58,10 +59,10 @@ public class Main {
 
         OrderItem orderItem = new OrderItem();
         int count = 2;
-        orderItem.setOrder(order);
-        orderItem.setItem(item);
-        orderItem.setCount(count);
-        orderItem.setOrderPrice(item.getPrice() * count);
-        em.persist(orderItem);
+//        orderItem.setOrder(order);
+//        orderItem.setItem(item);
+//        orderItem.setCount(count);
+//        orderItem.setOrderPrice(item.getPrice() * count);
+//        em.persist(orderItem);
     }
 }

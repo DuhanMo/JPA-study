@@ -1,5 +1,6 @@
-package jpabook.model.entity;
+package jpabook.model.entity.item;
 
+import jpabook.model.entity.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Item {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
