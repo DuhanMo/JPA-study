@@ -32,9 +32,10 @@ public class Main {
     private static void logic(EntityManager em) {
         Member member = new Member();
         member.setName("모두한");
-        member.setCity("인천");
-        member.setStreet("솔샘로");
-        member.setZipcode("123");
+//        member.setCity("인천");
+//        member.setStreet("솔샘로");
+//        member.setZipcode("123");
+        member.setAddress(new Address("인천", "솔샘로", "123"));
         em.persist(member);
 
         Album item = new Album();
@@ -47,8 +48,9 @@ public class Main {
 
         Delivery delivery = new Delivery();
         delivery.setStatus(DeliveryStatus.READY);
-        delivery.setCity("인천");
-        delivery.setZipcode("123");
+//        delivery.setCity("인천");
+//        delivery.setZipcode("123");
+        delivery.setAddress(new Address("인천", "솔샘로", "123"));
 
         OrderItem orderItem = new OrderItem();
         int count = 2;
