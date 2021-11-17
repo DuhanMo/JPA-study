@@ -2,7 +2,6 @@ package jpabook.model;
 
 import jpabook.model.entity.*;
 import jpabook.model.entity.item.Album;
-import jpabook.model.entity.item.Item;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,7 +66,5 @@ public class Main {
         em.persist(order);
 
         System.out.println("롬복을 뚫고 직접 작성한 세터가 작동하는가? : " + delivery.getOrder());
-
-
     }
 }

@@ -42,3 +42,38 @@ LEFT JOIN TEAM t on m.TEAM_ID=t.id and t.name='A'
 select m
 from Member m join fetch m.team
 
+String jpql = "select m from Member m join fetch m.team";
+List<Member> members = em.createQuery(jpql, Member.class).getResultList();
+for (member member ; members) {
+	// 페치 조인으로 회원과 팀을 함께 조회해서 지연로딩 발생 안함
+	System.out.println("username = " + member.getUsername() + ", " +
+		"teamname = " + member.getTeam().name());
+}
+
+// 컬렉션 페치조인
+select t
+from TEAM t join fetch t.members
+where t.name = '팀A'
+// 컬렉션 페치조인 -> 실행된 SQL
+SELECT
+	T.*, M.*
+FROM TEAM T
+INNER JOIN MEMBER M ON T.ID=M.TEAM_ID
+WHERE T.NAME = '팀A'
+/*
+일대다 조인은 결과가 증가할 수 있지만 일대일, 다대일 조인은 결과가 증가하지 않는다.
+*/
+// 컬렉션 페치조인 예제
+String jpql = "select t from Team t join fetch t.members where t.name = '팀A'";
+List<Team> teams = em.createQuery(jpql.Team.class).getResultList();
+
+for (Team team : teams) {
+	System.out.println("teamname = " + team.getName() +", team = " + team);
+	for (Member member : team.getMembres()) {
+		// 페치 조인으로 팀과 회원을 함께 조회해서 지연 로딩 발생 안함
+		system.out.println(
+			"-> username = " + member.getUsername() + ", member = " + member);
+	}
+}
+
+

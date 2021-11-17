@@ -204,5 +204,66 @@ Root<Member> m = mainQuery.from(Member.class);
 mainQuery.select(m)
 	.where(cb.ge(m.<Integer>get("age"), subQuery));
 
+/*
+JPQL
+select m from Member m
+where exists
+	(select t from m.team t where t.name='팀A')
+*/
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery<Member> mainQuery = cb.createQuery(Member.class);
 
+// 서브 쿼리에서 사용되는 메인 쿼리의 m
+Root<Member> m = mainQuery.from(Member.class);
 
+// 서브 쿼리 생성
+Subquery<Team> subQuery = mainQuery.subquery(Team.class);
+Root<Member> subM = subQuery.correlate(m); // 메인쿼리의 별칭을 가져옴
+Join<Member, Team> t = subM.join("team");
+subQuery.select(t)
+	.where(cb.equal(t.get("name"), "팀A"));
+
+// 메인 쿼리 생성
+mainQuery.select(m)
+	.where(cb.exists(subQuery));
+
+List<Member> resultList = em.createQuery(mainQuery).getResultList();
+
+/**
+ * IN 식
+ * */
+/*
+JPQL
+select m from Member m
+where m.username in ("회원1", "회원2")
+*/
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery cq = cb.createQuery(Member.class);
+Root<MEmber> m = cq.from(Member.class);
+
+cq.select(m)
+	.where(cb.in(m.get("username")))
+	.value("회원1")
+	.value("회원2");
+
+/**
+ * CASE 식
+ * */
+ /*
+JPQL
+select m.username,
+	case when m.age>=60 then 600
+		when m.age<=15 then 500
+		else 1000
+	end
+from Member m
+ */
+
+Root<Member> m = cq.from(Member.class);
+cq.multiselect(
+	m.get("username"),
+	cb.selectCase()
+		.when(cb.ge(m.<Integer>get("age"), 60), 600)
+		.when(cb.le(m.<Integer>get("age"), 15), 500)
+		.otherwise(1000)
+);

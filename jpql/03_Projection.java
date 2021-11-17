@@ -12,7 +12,7 @@ String query = "SELECT a FROM address a"; // 잘못된 쿼리이다. 임베디�
 String query = "SELECT O.address FROM order o";
 List<Address> address = em.createQuery(query, Address.class).getResultList();
  
-// 3. 여러 프로젝션 -> TypeQuery를 이용할 수 없다.
+// 3. 여러 프로젝션 -> TypedQuery를 이용할 수 없다.
 Query query = em.createQuery("SELECT m.username, m.age FROM Member m");
 List resultList = query.getResultList();
 
@@ -50,5 +50,5 @@ public class UserDTO {
 	}
 }
 
-TypeQuery<UserDTO> query = em.createQuery("SELECT new jpabook...UserDTO(m.username, m.age) FROM Member m", UserDTO.class);
+TypedQuery<UserDTO> query = em.createQuery("SELECT new jpabook...UserDTO(m.username, m.age) FROM Member m", UserDTO.class);
 List<UserDTO> resultList = query.getResultList();
