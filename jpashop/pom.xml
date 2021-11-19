@@ -32,6 +32,7 @@
         <slf4j.version>1.7.6</slf4j.version>
         <!-- 테스트 버전 -->
         <junit.version>4.12</junit.version>
+        <junit-jupiter.version>5.1.0</junit-jupiter.version>
     </properties>
 
     <dependencies>
@@ -126,6 +127,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- 쥬피터 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
 
 
